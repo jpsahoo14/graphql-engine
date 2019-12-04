@@ -13,7 +13,7 @@ const webpackIsomorphicToolsPlugin = new WebpackIsomorphicToolsPlugin(
   require('./webpack-isomorphic-tools')
 );
 
-const UglifyJSPlugin = require('uglifyjs-webpack-plugin');
+const TerserPlugin = require('terser-webpack-plugin');
 const OptimizeCssAssetsPlugin = require('optimize-css-assets-webpack-plugin');
 
 const cleanOptions = {
@@ -126,15 +126,18 @@ module.exports = {
       name: 'vendor',
     },
     minimizer: [
-      new UglifyJSPlugin({
-        uglifyOptions: {
+      new TerserPlugin({
+        terserOptions: {
           ecma: 8,
           warnings: false,
-          compress: false,
+          parse: {},
+          compress: {},
           mangle: true,
+          module: false,
           output: {
             comments: false,
             beautify: false,
+            ecma: 8,
           },
           toplevel: false,
           nameCache: null,
